@@ -50,7 +50,11 @@ app.use((error, req, res, next) => {
   });
 
  
+<<<<<<< HEAD
 app.listen(process.env.port||4200,"0,0,0,0",()=>{
+=======
+app.listen(process.env.port||4200,"0.0.0.0",()=>{
+>>>>>>> origin/master
     console.log("http://localhost:4200/api/auth");
     console.log("http://localhost:4200/api/users");
 })
