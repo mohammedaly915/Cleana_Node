@@ -6,7 +6,8 @@ const BinSchema=new mongoose.Schema(
     bigBottle:{type:Number,default:0},
     smallBottle:{type:Number,default:0},
     materialValue: { type: Number, default: 0 },
-    location:{type:String,default:0}
+    location:{type:String,default:0},
+    
     
 },
 {timestamps:true})

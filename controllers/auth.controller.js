@@ -57,24 +57,24 @@ const register= asyncWrapper(async(req,res,next)=>{
 const login =asyncWrapper(async(req,res,next)=>{
     const {userName,email,password}=req.body;
  
-    if((!email || !userName) && !password){
-        const error=appError.create("Email and password are required",400,status.ERROR)
-        return next(error)
+    if ( (!email && !userName) && !password ) {
+        const error = appError.create("Email or username and password are required", 400, status.FAIL);
+        return next(error);
     }
     let user;
     if (email) {
         user = await User.findOne({ email: email });
-    } else if (userName) {
+    } 
+    else if (userName) {
         user = await User.findOne({ userName: userName });
-    }    if (!user) {
+    }    
+    if (!user) {
         const error = appError.create("user not found", 400, status.FAIL);
         return next(error);
       }
     const matchedPassWord=await bcrypt.compare(password,user.password)
     if (user&&matchedPassWord){
-        const token=await GenJWT({  identifier: email ? user.email : user.userName,
-                                    id: user._id,
-                                    isAdmin:user.isAdmin})
+        const token = await GenJWT({ email: user.email, id: user._id, isAdmin: user.isAdmin });
         //user.token=token
         return res.json({status:"Success",data:{user},token})
     } 

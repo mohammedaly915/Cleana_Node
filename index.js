@@ -6,7 +6,8 @@ const mongoose = require("mongoose");
 const authRouter=require("./routes/auth.router")
 const userRouter=require("./routes/user.router")
 const binRouter=require("./routes/bin.router")
-const binUserRouter=require("./routes/binUser.router")
+const transactionRouter=require("./routes/transaction.router")
+const productRouter=require("./routes/product.router")
 const status=require("./utiles/status")
 const path=require('path')
 
@@ -27,7 +28,8 @@ app.use(express.json());
 app.use("/api/auth",authRouter)
 app.use("/api/users", userRouter);
 app.use("/api/bins", binRouter);
-app.use("/api/:binId/:username", binUserRouter );
+app.use("/api/transaction", transactionRouter );
+app.use("/api/product", productRouter );
 
 app.all("*", (req, res, next) => {
     return res
@@ -48,7 +50,7 @@ app.use((error, req, res, next) => {
   });
 
  
-app.listen(process.env.port||4200,"localhost",()=>{
+app.listen(process.env.port||4200,"0,0,0,0",()=>{
     console.log("http://localhost:4200/api/auth");
     console.log("http://localhost:4200/api/users");
 })
