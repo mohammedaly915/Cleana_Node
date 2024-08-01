@@ -48,7 +48,7 @@ app.use((error, req, res, next) => {
   });
 
  
-app.listen(process.env.port||4200,"localhost",()=>{
+app.listen(process.env.port||4200,"0.0.0.0"",()=>{
     console.log("http://localhost:4200/api/auth");
     console.log("http://localhost:4200/api/users");
 })
