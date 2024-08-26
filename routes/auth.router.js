@@ -29,6 +29,7 @@ const upload =multer({
 const optionalUpload = (req, res, next) => {
     upload.single('userPic')(req, res, (err) => {
         if (err) { 
+            console.log(err);
             return next(err);
         }
         // Proceed to next middleware or route handler
@@ -41,6 +42,7 @@ router.route("/register").post(optionalUpload,authController.register);
 router.route("/login").post(authController.login);
 
 router.route("/intiate").get(locationController.initializeCountriesAndCities);
+router.route("/intiateCity").get(locationController.initializeCitiesForEgypt);
 router.route("/countries").get(locationController.getCountries);
 router.route("/:countryId/city").get(locationController.getCitiesByCountry);
 
