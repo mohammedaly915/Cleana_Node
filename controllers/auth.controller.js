@@ -7,14 +7,20 @@ const asyncWrapper = require("../middlewares/asyncWrapper");
 
 const register = asyncWrapper(async (req, res, next) => {
     try {
-        const { userName, email, password, userCountry, userCity, userAddress, Gender } = req.body;
+        console.log('Request Body:', req.body);
+        const { userName, email, password, userCountry, userCity, userAddress,phone ,Gender } = req.body;
 
         let errors = [];
 
-        if (!userName) errors.push("Username is required");
+        if (!userName) 
+            {
+                console.log("userName is required");
+
+                errors.push("userName is required");
+            }
         if (!email){
-            console.log("Email is required");
-            errors.push("Email is required");
+            console.log("email is required");
+            errors.push("email is required");
         }
             
         if (!password) {
@@ -28,7 +34,7 @@ const register = asyncWrapper(async (req, res, next) => {
 
         const oldUser = await User.findOne({ email });
         if (oldUser) {
-            console.log("موجود");
+            console.log("found user");
             throw appError.create("User already exists", 400, status.FAIL);
         }
 
@@ -36,8 +42,9 @@ const register = asyncWrapper(async (req, res, next) => {
         const newUser = new User({
             userName,
             email,
+            phone,
             password: hashedPass,
-            userPic: req.file.filename,
+            userPic: req.file ? req.file.filename : undefined,
             userCountry,
             userCity,
             userAddress,
@@ -56,7 +63,7 @@ const register = asyncWrapper(async (req, res, next) => {
         res.status(201).json({ status: status.SUCCESS, data: newUser, token });
 
     } catch (err) {
-        console.log("لو ده ظهر لغيني علطول يعم");
+        console.log("laghini alatol");
         next(err);
     }
 });
